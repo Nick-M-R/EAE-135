@@ -31,8 +31,56 @@ E_T_Al = 68.95e9 #N/m^2
 S = E_C_Al*(np.pi*(Ra**2 - Ri**2)) + E_C_CRFP*(np.pi*(Rc**2 - Ra**2))
 
 # Plot the following:
+Al_factor = E_C_Al/S
+CRFP_factor = E_C_CRFP/S
+
     # Axial Displacement (u1) wrt x1
+def u1(x):
+    y=[]
+    for i in x:
+        y.append(-100/(2*S)*i**2 - (1250e3/S)*i)
+    return y
+
     # Axial Strain (epsilon1) wrt x1
+def epsilon1(x):
+    y=[]
+    for i in x:
+        y.append(-100/S*i-1250e3/S)
+    return y
+
     # Axial Stress (sigma1) wrt x1
         # CFRP
         # 6061-T6 Al
+def sigma1(x,
+       material='al'
+            ):
+    y=[]
+    for i in x:
+        if material == 'al':
+            y.append(Al_factor*(-100*i-1250e3))
+        if material == 'cfrp':
+            y.append(CRFP_factor*(-100*i-1250e3))
+    return y
+
+x = np.linspace(0,20,21)
+
+plt.figure()
+plt.title('Axial Displacement of Both Materials Across the Length of the Rocket')
+plt.plot(x,u1(x),'b-')
+plt.xlabel('x [m]')
+plt.ylabel('$u_1$ [m]')
+
+plt.figure()
+plt.title('Axial Strain of Both Materials Across the Length of the Rocket')
+plt.plot(x,epsilon1(x))
+plt.xlabel('x [m]')
+plt.ylabel('$\epsilon_1$')
+
+plt.figure()
+plt.title('Axial Stress of Both Materials Across the Length of the Rocket')
+plt.plot(x,sigma1(x,material='al'),'b-',label='6061-T6')
+plt.plot(x,sigma1(x,material='cfrp'),'b--',label='CFRP')
+plt.xlabel('x [m]')
+plt.ylabel('$\sigma_1$ [Pa]')
+
+plt.show()
