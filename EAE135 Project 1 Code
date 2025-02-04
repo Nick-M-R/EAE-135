@@ -1,0 +1,38 @@
+# EAE 1305 Project 1
+# 02/04/2025
+
+# standard imports
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Dimensions
+D = 3 #m
+t_Al = 0.005 #m
+t_CRFP = t_Al #m
+L = 20 #m
+Rc = 1.500 #m
+Ra = 1.495 #m
+Ri = 1.490 #m
+
+# Constants
+# CFRP
+sigmaS_T_CFRP = 1860e6 #N/m^2
+sigmaS_C_CFRP = -1476e6 #N/m^2
+E_C_CRFP = 115e9 #N/m^2
+E_T_CRFP = E_C_CRFP #N/m^2
+
+#6061-T6 Al
+sigmaS_T_Al = 289.6e6 #N/m^2
+sigmaS_C_Al = -sigmaS_T_Al #N/m^2
+E_C_Al = 69.69e9 #N/m^2
+E_T_Al = 68.95e9 #N/m^2
+
+# Stiffness
+S = E_C_Al*(np.pi*(Ra**2 - Ri**2)) + E_C_CRFP*(np.pi*(Rc**2 - Ra**2))
+
+# Plot the following:
+    # Axial Displacement (u1) wrt x1
+    # Axial Strain (epsilon1) wrt x1
+    # Axial Stress (sigma1) wrt x1
+        # CFRP
+        # 6061-T6 Al
